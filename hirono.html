@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play with the Game Master!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #ffebf0;
+            text-align: center;
+            transition: transform 0.1s;
+        }
+        .game-master {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .game-master img {
+            width: 150px;
+            height: auto;
+        }
+        button {
+            background: #ff4f81;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #e04472;
+        }
+        input {
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .wrong {
+            color: red;
+            font-size: 50px;
+            font-weight: bold;
+            display: none;
+            text-shadow: 5px 5px 10px black;
+        }
+        .correct {
+            color: green;
+            font-size: 40px;
+            font-weight: bold;
+            display: none;
+            text-shadow: 2px 2px 5px black;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-master">
+        <img src="win.gif" alt="Cute Game Master">
+        <h2>Hi there! Chúc mừng ngươi đã chiến thắng!</h2>
+        <p>Hãy kiểm tra xem người có tìm đúng từ khóa hay không?</p>
+        <input type="text" id="keywordInput" placeholder="Enter keyword...">
+        <button onclick="checkKeyword()">Check</button>
+        <br><br>
+    </div>
+    <div class="wrong" id="wrongMessage">YOU WRONG HAHAHA!</div>
+    <div class="correct" id="correctMessage">CORRECT! Nooo.....</div>
+    
+    <script>
+        function checkKeyword() {
+            const keyword = document.getElementById("keywordInput").value;
+            if (keyword.toLowerCase() === "quynhxinhdepnhat") {
+                document.getElementById("correctMessage").style.display = "block";
+                document.body.style.backgroundColor = "#b6ffb6";
+                setTimeout(() => {
+                    window.location.href = "winner.html";
+                }, 2000);
+            } else {
+                document.body.style.transform = "translateX(-10px)";
+                setTimeout(() => document.body.style.transform = "translateX(10px)", 50);
+                setTimeout(() => document.body.style.transform = "translateX(-10px)", 100);
+                setTimeout(() => document.body.style.transform = "translateX(10px)", 150);
+                setTimeout(() => document.body.style.transform = "translateX(0px)", 200);
+                document.getElementById("wrongMessage").style.display = "block";
+                setTimeout(() => document.getElementById("wrongMessage").style.display = "none", 2000);
+            }
+        }
+    </script>
+</body>
+</html>

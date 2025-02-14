@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: pink;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            flex-direction: column;
+        }
+        .game-container, .congrats-container, .fail-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+        .images {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: red;
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container" id="gameContainer">
+        <h2>HÃY CHỌN CHO ĐÚNG OK? 😊</h2>
+        <p id="questionCounter">Question 1 of 10</p>
+        <div class="images" id="imagesContainer"></div>
+    </div>
+    
+    <div class="congrats-container" id="congratsContainer">
+        <h2>Congratulations! 🎉</h2>
+        <p>You won! Here's your secret code:</p>
+        <h3>❤️ quynhxinhdepnhat ❤️</h3>
+        <button class="btn" onclick="goToMain()">Cứu Anh!</button>
+    </div>
+    
+    <div class="fail-container" id="failContainer">
+        <h2>Oops! 😢</h2>
+        <p>HAHAHAHA YOU LOSTTT!</p>
+        <button class="btn" onclick="startGame()">Try Again</button>
+    </div>
+    
+    <script>
+        let questions = [
+            { trueImg: 'q2.jpg', falseImg: 'q1.png', correct: true },
+            { trueImg: 'q2.jpg', falseImg: 'q3.jpg', correct: true },
+            { trueImg: 'q4.jpg', falseImg: 'q2.jpg', correct: true },
+            { trueImg: 'q4.jpg', falseImg: 'q5.png', correct: true },
+            { trueImg: 'q6.png', falseImg: 'q4.jpg', correct: true },
+            { trueImg: 'q7.png', falseImg: 'q6.png', correct: true },
+            { trueImg: 'q8.png', falseImg: 'q7.png', correct: true },
+            { trueImg: 'q9.png', falseImg: 'q8.png', correct: true },
+            { trueImg: 'q10.png', falseImg: 'q9.png', correct: true },
+            { trueImg: 'q11.jpg', falseImg: 'q10.png', correct: true }
+        ];
+
+        let currentQuestion = 0;
+        let correctAnswers = 0;
+
+        function startGame() {
+            document.getElementById('gameContainer').style.display = 'block';
+            document.getElementById('congratsContainer').style.display = 'none';
+            document.getElementById('failContainer').style.display = 'none';
+            currentQuestion = 0;
+            correctAnswers = 0;
+            loadQuestion();
+        }
+        
+        function loadQuestion() {
+            let question = questions[currentQuestion];
+            let imagesContainer = document.getElementById('imagesContainer');
+            imagesContainer.innerHTML = '';
+            
+            let isTrueFirst = Math.random() < 0.5;
+            
+            let trueImg = `<img src="${question.trueImg}" alt="True" onclick="checkAnswer(true)">`;
+            let falseImg = `<img src="${question.falseImg}" alt="False" onclick="checkAnswer(false)">`;
+            
+            imagesContainer.innerHTML = isTrueFirst ? trueImg + falseImg : falseImg + trueImg;
+            
+            document.getElementById('questionCounter').innerText = `Question ${currentQuestion + 1} of 10`;
+        }
+
+        function checkAnswer(choice) {
+            if (choice === questions[currentQuestion].correct) {
+                correctAnswers++;
+            } else {
+                endGame(false);
+                return;
+            }
+            
+            currentQuestion++;
+            if (currentQuestion < 10) {
+                loadQuestion();
+            } else if (correctAnswers === 10) {
+                endGame(true);
+            }
+        }
+
+        function endGame(won) {
+            document.getElementById('gameContainer').style.display = 'none';
+            if (won) {
+                document.getElementById('congratsContainer').style.display = 'block';
+            } else {
+                document.getElementById('failContainer').style.display = 'block';
+            }
+        }
+
+        function goToMain() {
+            window.location.href = "hirono.html"; // Change this to your main website URL if needed
+        }
+
+        startGame(); // Start the game automatically on page load
+    </script>
+</body>
+</html>
